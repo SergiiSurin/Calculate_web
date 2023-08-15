@@ -25,38 +25,17 @@
         </form>
         <div class="calculation">
             <?php
-            // 1. check operator in + - * / in_array($oper, ['+', '-', '*'])
-            // 2. check num1 num2 are numbers is_numeric(), is_int() '58' 58
-            // 0. check wheter required fields exist in POST $num1 = (float) $_POST['num1'] ?? 0;
-            // 4. div with 0
-
-            // if (isset($_POST["complete"])) {      if (count($_POST) > 0)
-            $errors = [];
+            include '../src/functions.php';
 
             if (count($_POST) > 0) {
-                if (!in_array($_POST["operator"], ['+', '-', '*', '/'])) {
-                    exit('Choose one of the following operations + - * /');
-                } else {
-                    $oper = $_POST["operator"];
-                }
-                if (!is_numeric($_POST["number1"]) || !is_numeric($_POST["number2"])) {
-                    exit('Enter numbers to make calculate!');
-                } else {
-                    $number1 = (float) $_POST['number1'] ?? 0;
-                    $number2 = (float) $_POST['number2'] ?? 0;
-                }
-                if (($oper === '/') && ($number2 === 0.0)) {
-                    exit('Division by zero forbiden!');
-                }
+                $operands = [$_POST["operator"], $_POST["number1"], $_POST["number2"]];
+                [$data, $error] = calculate(...$operands);
 
-                $res = match ($oper) {
-                    '+' => $number1 + $number2,
-                    '-' => $number1 - $number2,
-                    '*' => $number1 * $number2,
-                    '/' => $number1 / $number2,
-                };
-
-                echo "Result = ", $res;
+                if (isset($data)) {
+                    echo '<p class="result"> Result = ' . $data . '</p>';
+                } else {
+                    echo '<p class="error"> Error = ' . $error . '</p>';
+                }
             }
 
             ?>
