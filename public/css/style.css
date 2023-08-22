@@ -35,11 +35,13 @@ select {
   font-size: 18px;
 }
 .result {
+  font-size: 24px;
   font-weight: 700;
   color: green;
 }
 
 .error {
+  font-size: 24px;
   font-weight: 700;
   color: red;
 }

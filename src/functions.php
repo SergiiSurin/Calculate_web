@@ -1,12 +1,20 @@
 <?php
-function input_validate($operator, $num1, $num2)
+
+function parcing_input()
+{
+    $oper = $_POST["operator"];
+    $number1 = $_POST["number1"];
+    $number2 = $_POST["number2"];
+    return [$oper, $number1, $number2];
+}
+
+function validate_input($op, $num1, $num2)
 {
 
-    if (!in_array($operator, ['+', '-', '*', '/'])) {
+    if (!in_array($op, ['+', '-', '*', '/'])) {
         throw new Exception('Selected operation is not processed');
     }
-    $oper = $operator;
-
+    $oper = $op;
 
     if (!is_numeric($num1) || !is_numeric($num2)) {
         throw new Exception('Try to enter any valid numbers again');
@@ -22,18 +30,34 @@ function input_validate($operator, $num1, $num2)
 
 function calculate($oper, $number1, $number2)
 {
-    $res = NULL;
-    $errors = NULL;
-    try {
-        input_validate($oper, $number1, $number2);
-        $res = match ($oper) {
-            '+' => $number1 + $number2,
-            '-' => $number1 - $number2,
-            '*' => $number1 * $number2,
-            '/' => $number1 / $number2,
-        };
-    } catch (Exception $e) {
-        $errors = $e->getMessage();
+    $res = match ($oper) {
+        '+' => $number1 + $number2,
+        '-' => $number1 - $number2,
+        '*' => $number1 * $number2,
+        '/' => $number1 / $number2,
+    };
+    return $res;
+}
+
+function output_result($res, $error)
+{
+    if (isset($res)) {
+        echo '<p class="result"> Result = ' . $res . '</p>';
+    } else {
+        echo '<p class="error"> Error = ' . $error . '</p>';
     }
-    return [$res, $errors];
+}
+
+function calculation()
+{
+    $res = NULL;
+    $error = NULL;
+    list($oper, $number1, $number2) = parcing_input();
+    try {
+        list($oper, $number1, $number2) = validate_input($oper, $number1, $number2);
+        $res = calculate($oper, $number1, $number2);
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+    output_result($res, $error);
 }
