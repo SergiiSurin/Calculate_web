@@ -1,5 +1,5 @@
 .form {
-  width: 600px;
+  width: 800px;
   padding: 30px;
   margin: 0 auto;
 }
@@ -10,6 +10,30 @@
   margin: 0 auto;
 }
 
+.calc__num,
+.button {
+  border: 1px solid grey;
+  height: 23px;
+  padding: 0px 5px;
+  font-size: 18px;
+  color: cornflowerblue;
+  width: 200px;
+}
+.button {
+  display: inline-block;
+  height: 25px;
+  font-size: 14px;
+  width: fit-content;
+  padding: 0px 25px;
+  text-transform: uppercase;
+}
+
+select {
+  border: 1px solid grey;
+  height: 25px;
+  padding: 0px 5px;
+  font-size: 18px;
+}
 .result {
   font-weight: 700;
   color: green;

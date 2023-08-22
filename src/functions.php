@@ -1,18 +1,18 @@
 <?php
-function input_validate(...$operands)
+function input_validate($operator, $num1, $num2)
 {
 
-    if (!in_array($operands[0], ['+', '-', '*', '/'])) {
+    if (!in_array($operator, ['+', '-', '*', '/'])) {
         throw new Exception('Selected operation is not processed');
     }
-    $oper = $operands[0];
+    $oper = $operator;
 
 
-    if (!is_numeric($operands[1]) || !is_numeric($operands[2])) {
+    if (!is_numeric($num1) || !is_numeric($num2)) {
         throw new Exception('Try to enter any valid numbers again');
     }
-    $number1 = (float) $operands[1] ?? 0;
-    $number2 = (float) $operands[2] ?? 0;
+    $number1 = (float) $num1 ?? 0;
+    $number2 = (float) $num2 ?? 0;
 
     if (($oper === '/') && ($number2 === 0.0)) {
         throw new Exception('Division by zero forbidden!');
@@ -20,12 +20,12 @@ function input_validate(...$operands)
     return [$oper, $number1, $number2];
 }
 
-function calculate(...$operands)
+function calculate($oper, $number1, $number2)
 {
     $res = NULL;
     $errors = NULL;
     try {
-        [$oper, $number1, $number2] = input_validate(...$operands);
+        input_validate($oper, $number1, $number2);
         $res = match ($oper) {
             '+' => $number1 + $number2,
             '-' => $number1 - $number2,
